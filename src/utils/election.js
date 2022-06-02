@@ -15,7 +15,7 @@ export function getElection(id) {
 }
 
 export async function vote( id, candidate, time ) {
-  await window.contract.vote({ id, candidate, end_time: time  });
+  await window.contract.vote({ id, candidate });
 }
 
 export function getVotes(id) {
@@ -27,6 +27,6 @@ export function deleteElection(id) {
 }
 
 export function startElection(id, time) {
-    return window.contract.start_election({id, time});
+    return window.contract.start_election({id});
 }
 

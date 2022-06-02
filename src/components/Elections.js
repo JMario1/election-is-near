@@ -45,10 +45,10 @@ export default function Elections() {
   }
 };
 
-const start = async (id, time) => {
+const start = async (id) => {
   try {
     setLoading(true);
-   await startElection(id, time).then((resp) => {
+   await startElection(id).then((resp) => {
       toast(<NotificationSuccess text="Election started." />);
       getElectionsList();
     }).catch(error => {

@@ -46,9 +46,9 @@ impl Election {
         election
     }
 
-    pub fn vote(&mut self, candidate: String, time: u64) {
+    pub fn vote(&mut self, candidate: String) {
         assert!(&self.is_active, "Election is yet to start");
-        assert!(&self.end_time > &time, "Election is closed");
+        assert!(&self.end_time > &(env::block_timestamp()/1000000), "Election is closed");
         assert!(!&self.voted.contains_key(&env::signer_account_id()), "Already voted");
         let vote =  match  &self.scores.get(&candidate) {
 
@@ -62,10 +62,10 @@ impl Election {
 
     }
 
-    pub fn start_election(&mut self, time: u64) {
+    pub fn start_election(&mut self) {
         assert_eq!(&self.owner, &env::signer_account_id(), "Not Authourized");
         assert!(!self.is_active, "Already Started");
-        self.end_time = time + (self.end_time * (60 * 60 * 1000));
+        self.end_time = env::block_timestamp()/1000000 + (self.end_time * (60 * 60 * 1000));
         self.is_active = true;
 
     }

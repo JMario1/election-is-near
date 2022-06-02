@@ -79,9 +79,9 @@ impl Contract {
       elections
     }
 
-    pub fn vote(&mut self, id: u32, candidate: String, end_time: u64) {
+    pub fn vote(&mut self, id: u32, candidate: String) {
       if let  Some(mut e) = self.elections.get(&id) {
-          e.vote(candidate, end_time);
+          e.vote(candidate);
           let _ = &self.elections.insert(&id, &e);
       }else {
           env::panic(b"could not vote");
@@ -97,9 +97,9 @@ impl Contract {
       
     }
 
-    pub fn start_election(&mut self, id: u32, time: u64) {
+    pub fn start_election(&mut self, id: u32) {
       if let  Some(mut e) = self.elections.get(&id) {
-          e.start_election(time);
+          e.start_election();
           let _ = &self.elections.insert(&id, &e);
 
       }else {
@@ -175,7 +175,7 @@ mod tests {
         testing_env!(context);
         let mut contract = Contract::default();
         contract.create_election(vec!["Paul".to_string(), "Ken".to_string()], 3,"presidency electio".to_string(), "president".to_string());
-        contract.vote(0, "Paul".to_string(), 2);
+        contract.vote(0, "Paul".to_string());
      
        
     }
@@ -186,8 +186,8 @@ mod tests {
         testing_env!(context);
         let mut contract = Contract::default();
         contract.create_election(vec!["Paul".to_string(), "Ken".to_string()], 3,"presidency electio".to_string(), "president".to_string());
-        contract.start_election(0, 4);
-        contract.vote(0, "Paul".to_string(), 5);
+        contract.start_election(0,);
+        contract.vote(0, "Paul".to_string());
         let result = contract.get_votes(0).unwrap();
         assert_eq!(
             1,

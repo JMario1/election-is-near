@@ -42,13 +42,11 @@ export default function ViewElection(){
 
 
   const voteCandidate = async (candidate) => {
-    const time = Date.now();
     try {
       setLoading(true)
         await vote(
           electionId,
-          candidate,
-          time
+          candidate
         ).then((resp) => getVote());
         toast(<NotificationSuccess text="Voted successfully" />);
       } catch (error) {

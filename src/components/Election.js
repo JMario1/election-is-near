@@ -49,7 +49,6 @@ export default function Election({ election, del, start }){
 
 
   const showModal = (text, show) => {
-    const time = Date.now();
     return (
        <Modal show={show} onHide={handleClose}>
         <Modal.Body>Please confirm you want {text} the election</Modal.Body>
@@ -58,7 +57,7 @@ export default function Election({ election, del, start }){
             Cancel
           </Button>
           <Button variant="primary" onClick={() => {
-            text === "start" ? start(id, time) : del(id)
+            text === "start" ? start(id) : del(id)
             handleClose(text)
           }}>
             Confirm
